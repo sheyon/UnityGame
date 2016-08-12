@@ -26,10 +26,10 @@ public class RangeFinder : MonoBehaviour
     private float facingProduct;
     private int numberOfTargetsInPhoto;
 
-    [HideInInspector] public SessionPictureInfo sessionPictureInfo;
+    [HideInInspector] public StorePictureInfo storePictureInfo;
     [HideInInspector] public ListVisibleTargets listVisibleTargets;
-    [HideInInspector] public SessionPhotos sessionPhotos;
-    public List<SessionPictureInfo.PictureInfo> pictureInfo;
+    [HideInInspector] public StorePhotos storePhotos;
+    public List<StorePictureInfo.PictureInfo> pictureInfo;
     private List<Collider> visibleTargets;
 
     [HideInInspector] public Renderer preview;
@@ -39,12 +39,12 @@ public class RangeFinder : MonoBehaviour
 
     void Awake()
     {
-        sessionPictureInfo = GetComponent<SessionPictureInfo>();
-        pictureInfo = new List<SessionPictureInfo.PictureInfo>();
+        storePictureInfo = GetComponent<StorePictureInfo>();
+        pictureInfo = new List<StorePictureInfo.PictureInfo>();
         //preview = GetComponent<Renderer>();
 
         listVisibleTargets = GetComponent<ListVisibleTargets>();
-        sessionPhotos = GetComponent<SessionPhotos>();
+        storePhotos = GetComponent<StorePhotos>();
     }
 
 
@@ -70,7 +70,7 @@ public class RangeFinder : MonoBehaviour
             if (viewPos.x <= 0 || viewPos.x >= 1 || viewPos.y <= 0 || viewPos.y >= 1 || viewPos.z <= 0)
             {
                 //Targets are disregarded if they are off-screen
-                if (DEBUG) { Debug.Log("Waypoint " + i + " -- target is OFF SCREEN -- " + viewPos); }
+                if (DEBUG) { Debug.Log("Target " + i + " -- is OFF SCREEN -- " + viewPos); }
             }
             else
             {
@@ -168,7 +168,7 @@ public class RangeFinder : MonoBehaviour
 
     public void SavePictureInfo()
     {
-        pictureInfo.Add(new SessionPictureInfo.PictureInfo(target, facing, numberOfTargetsInPhoto, visibleTargets, tex));
+        pictureInfo.Add(new StorePictureInfo.PictureInfo(target, facing, numberOfTargetsInPhoto, visibleTargets, tex));
     }
 
 
