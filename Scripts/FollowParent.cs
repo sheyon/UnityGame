@@ -5,13 +5,13 @@ public class FollowParent : MonoBehaviour {
     //If you attach a FollowParent script, you SHOULD attach an Idle script as well.
     //Otherwise, if the NMA gets out of range of its Parent, it will only stand still.
 
-    public GameObject parent;
-    public Idle idle;
+    [HideInInspector] public Idle idle;
+    public GameObject leader;
     public bool amFollowing;
     private NavMeshAgent self;
     private float beginFollowDistance;
-    private float followTolerance;
-    private Vector3 parentNoFly;
+    private Vector3 leaderNoFly;
+    private bool doOnce;
 
     
     void Start()
@@ -19,23 +19,23 @@ public class FollowParent : MonoBehaviour {
         self = GetComponent<NavMeshAgent>();
         idle = GetComponent<Idle>();
         beginFollowDistance = 10f;
-        DoIHaveAParent();
+        DoIHaveALeader();
     }
 
 
-    void DoIHaveAParent()
+    void DoIHaveALeader()
     {
-        //If I don't have a parent, begin Idle script. Otherwise, continues to Update.
-        if (parent == null && idle != null)
+        //If I don't have a leader, begin Idle script. Otherwise, continues to Update.
+        if (leader == null && idle != null)
         {
             amFollowing = false;
             idle.isIdling = true;
         }
 
         //If you see this error, fix it, dummy!
-        if (parent == null && idle == null)
+        if (leader == null && idle == null)
         {
-            print("I have no parent and no other behaviors set!");
+            print("I have no leader and no other behaviors set!");
         }
     }
 
@@ -47,20 +47,20 @@ public class FollowParent : MonoBehaviour {
             self.stoppingDistance = 3.0f;
             self.speed = 3.5f;
 
-            if (Vector3.Distance(transform.position, parent.transform.position) >= beginFollowDistance)
+            if (Vector3.Distance(transform.position, leader.transform.position) >= beginFollowDistance)
             {
                 amFollowing = false;
                 self.ResetPath();
             }
             else
             {
-                self.SetDestination(parentNoFly);
+                self.SetDestination(leaderNoFly);
             }
         }
 
         if (amFollowing == false)
         {
-            if (Vector3.Distance(transform.position, parent.transform.position) <= beginFollowDistance)
+            if (Vector3.Distance(transform.position, leader.transform.position) <= beginFollowDistance)
             {
                 amFollowing = true;
             }
@@ -71,10 +71,19 @@ public class FollowParent : MonoBehaviour {
     void Update()
     {
         //If I do have a parent, continue as normal.
-        if (parent != null)
+        if (leader != null)
         {
-            parentNoFly = new Vector3(parent.transform.position.x, 0.5f, parent.transform.position.z);
+            leaderNoFly = new Vector3(leader.transform.position.x, 0.5f, leader.transform.position.z);
             Following();
+        }
+        else
+        {
+            //If the object's parent is permanently destroyed, it should revert to Idle behaviors.
+            if (doOnce == false)
+            {
+                DoIHaveALeader();
+                doOnce = true;
+            }
         }
     }
 }
