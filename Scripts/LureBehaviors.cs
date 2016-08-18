@@ -21,6 +21,7 @@ public class LureBehaviors : MonoBehaviour {
     {
         if (lureActive == true)
         {
+            //With these numbers, and Mass = 1 and Drag = 2, the lure will land almost EXACTLY where the cursor points. :D
             rb.AddForce((throwLure.calculateBestThrowSpeed(throwLure.throwPoint.transform.position, throwLure.adjustedHit, 1f) * 100f), ForceMode.Force);
             lureActive = false;
         }

@@ -12,12 +12,7 @@ public class ThrowLure : MonoBehaviour {
     public float maxDistance = 10f;
     private RaycastHit hit;
     private float distance;
-
-
-    void Start()
-    {
-
-    }
+    private float cooldownTime = 0f;
 
 
     public Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)
@@ -54,30 +49,42 @@ public class ThrowLure : MonoBehaviour {
 
     void Update()
     {
+        cooldownTime -= Time.deltaTime;
+
         if (Input.GetMouseButtonDown(1))
         {
-            //ThrowLure();
-            Physics.Raycast(crosshair.transform.position, crosshair.transform.forward, out hit, maxDistance);
-
-            if (hit.collider == null)
+            if (cooldownTime > 0)
             {
-                print("You did not hit anything!");
+                print("You cannot throw another lure yet!");
             }
-            else
+
+            else if (cooldownTime <= 0)
             {
-                distance = hit.distance;
-                print(distance);
-                Quaternion rotation = Quaternion.identity;
+                //ThrowLure();
+                Physics.Raycast(crosshair.transform.position, crosshair.transform.forward, out hit, maxDistance);
 
-                if (hit.distance <= maxDistance)
+                if (hit.collider == null)
                 {
-                    adjustedHit = new Vector3(hit.point.x, (hit.point.y + 0.5f), hit.point.z);
-
-                    Instantiate(lure, throwPoint.transform.position, rotation);
+                    print("You did not hit anything!");
                 }
                 else
                 {
-                    //do nothing
+                    distance = hit.distance;
+                    print(distance);
+                    Quaternion rotation = Quaternion.identity;
+
+                    if (hit.distance <= maxDistance)
+                    {
+                        adjustedHit = new Vector3(hit.point.x, (hit.point.y + 0.5f), hit.point.z);
+
+                        Instantiate(lure, throwPoint.transform.position, rotation);
+
+                        cooldownTime = 3f;
+                    }
+                    else
+                    {
+                        //Do nothing.
+                    }
                 }
             }
         }
