@@ -11,7 +11,7 @@ public class ThrowLure : MonoBehaviour {
 
     public float maxDistance = 10f;
     private RaycastHit hit;
-    private float distance;
+    //private float distance;
     private float cooldownTime = 0f;
 
 
@@ -60,7 +60,6 @@ public class ThrowLure : MonoBehaviour {
 
             else if (cooldownTime <= 0)
             {
-                //ThrowLure();
                 Physics.Raycast(crosshair.transform.position, crosshair.transform.forward, out hit, maxDistance);
 
                 if (hit.collider == null)
@@ -69,16 +68,13 @@ public class ThrowLure : MonoBehaviour {
                 }
                 else
                 {
-                    distance = hit.distance;
-                    print(distance);
+                    //distance = hit.distance;
                     Quaternion rotation = Quaternion.identity;
 
                     if (hit.distance <= maxDistance)
                     {
                         adjustedHit = new Vector3(hit.point.x, (hit.point.y + 0.5f), hit.point.z);
-
                         Instantiate(lure, throwPoint.transform.position, rotation);
-
                         cooldownTime = 3f;
                     }
                     else
