@@ -31,12 +31,14 @@ public class FollowLeaderState : ITargetState
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && target.fearPlayer == true)
+        if (other.gameObject == target.player && target.fearPlayer == true)
         {
+            target.fearedObject = other.gameObject;
             Repulsed();
         }
         if (other.gameObject.CompareTag("Feared"))
         {
+            target.fearedObject = other.gameObject;
             Repulsed();
         }
         if (other.gameObject.CompareTag("Lure") && target.attractable == true)

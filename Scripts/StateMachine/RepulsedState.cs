@@ -67,7 +67,7 @@ public class RepulsedState : ITargetState
         target.transform.rotation = Quaternion.Slerp(target.transform.rotation, repulsorRotation, target.fearedSpeed * Time.deltaTime);
 
         //Move backwards.
-        if (target.freezeInPlace == false)
+        if (target.fearedInPlace == false)
         {
             target.transform.position += -target.transform.forward * target.fearedSpeed * Time.deltaTime;
         }

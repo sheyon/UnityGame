@@ -8,7 +8,7 @@ public class StatePatternTarget : MonoBehaviour
     
     //Repulsion parameters
     public bool fearPlayer;
-    public bool freezeInPlace;
+    public bool fearedInPlace;
     [HideInInspector] public GameObject fearedObject;
     [HideInInspector] public float fearedSpeed = 5f;
     [HideInInspector] public float fearedDistance = 5f;
