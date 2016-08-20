@@ -1,37 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class ITargetState
+public interface ITargetState
 {
+    void UpdateState();
 
-    void OnTriggerEnter(Collider other)
-    {
+    void OnTriggerEnter(Collider other);
 
-    }
+    void Idle();
 
-    void Idle()
-    {
+    void FollowLeader();
 
-    }
+    void Repulsed();
 
-    void FollowLeader()
-    {
+    void Patrol();
 
-    }
-
-    void Repulsed()
-    {
-
-    }
-
-    void Patrol()
-    {
-
-    }
-
-    void Attracted()
-    {
-
-    }
-
+    void Attracted();
 }
