@@ -10,22 +10,18 @@ public class StatePatternTarget : MonoBehaviour
     public bool fearPlayer;
     public bool fearedInPlace;
     [HideInInspector] public GameObject fearedObject;
-    [HideInInspector] public float fearedSpeed = 5f;
     [HideInInspector] public float fearedDistance = 5f;
     [HideInInspector] public Vector3 previousLocation;
 
     //Attracted parameters
     public bool attractable;
+    [HideInInspector] public GameObject lure;
 
     //FollowLeader parameters
     public GameObject leader;
-    public float followSpeed = 3.65f;
-    public float followStoppingDist = 3f;
     public float beginFollowingDist = 10f;
 
     //Idle parameters
-    public float idleSpeed = 1.5f;
-    public float idleStoppingDist = 0f;
     public float idleRange = 2f;
 
     //Patrol parameters
@@ -33,7 +29,19 @@ public class StatePatternTarget : MonoBehaviour
     public bool loopWaypoints;
     public GameObject[] allWaypoints;
     public GameObject despawnPoint;
-    public float patrolSpeed = 3.5f;
+
+    //Speed
+    [HideInInspector] public float fearedSpeed = 5f;
+    [HideInInspector] public float attractedSpeed = 3f;
+    [HideInInspector] public float followSpeed = 3.65f;
+    [HideInInspector] public float idleSpeed = 1.5f;
+    [HideInInspector] public float patrolSpeed = 3.5f;
+
+    //StoppingDist
+    [HideInInspector] public float attractedStoppingDist = 2f;
+    [HideInInspector] public float followStoppingDist = 3f;
+    [HideInInspector] public float idleStoppingDist = 0f;
+    [HideInInspector] public float patrolStoppingDist = 0f;
 
     [HideInInspector] public ITargetState currentState;
     [HideInInspector] public IdleState idleState;
@@ -58,16 +66,7 @@ public class StatePatternTarget : MonoBehaviour
     void Start()
     {
         currentLocation = transform.position;
-        DoIFearPlayer();
         StartingBehaviors();
-    }
-
-    public void DoIFearPlayer()
-    {
-        if (fearPlayer == true)
-        {
-            fearedObject = GameObject.FindGameObjectWithTag("Player");
-        }
     }
 
     void StartingBehaviors()

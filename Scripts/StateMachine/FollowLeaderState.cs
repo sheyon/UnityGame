@@ -25,6 +25,7 @@ public class FollowLeaderState : ITargetState
         //If my leader is destroyed, revert to Idle behaviors.
         else if (target.leader == null)
         {
+            target.currentLocation = target.transform.position;
             Idle();
         }
     }
@@ -43,6 +44,7 @@ public class FollowLeaderState : ITargetState
         }
         if (other.gameObject.CompareTag("Lure") && target.attractable == true)
         {
+            target.lure = other.gameObject;
             Attracted();
         }
         if (other.gameObject == target.leader)

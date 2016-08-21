@@ -59,7 +59,6 @@ public class RepulsedState : ITargetState
 
     void Flee()
     {
-        Debug.Log("I am Fleeing!");
         target.navMeshAgent.ResetPath();
 
         //Look at player.
@@ -76,14 +75,12 @@ public class RepulsedState : ITargetState
 
     void ReturnHome()
     {
-        Debug.Log("I am Returning Home");
         if (target.allWaypoints == null && target.leader == null)
         {
             //Return to original idle position
             target.navMeshAgent.SetDestination(target.previousLocation);
             if (target.navMeshAgent.remainingDistance <= .5f)
             {
-                Debug.Log("I am returning to Idle");
                 Idle();
             }
         }
@@ -94,7 +91,6 @@ public class RepulsedState : ITargetState
             target.navMeshAgent.SetDestination(target.leader.transform.position);
             if (target.navMeshAgent.remainingDistance <= .5f)
             {
-                Debug.Log("I am returning to Leader");
                 FollowLeader();
             }
         }
@@ -102,7 +98,6 @@ public class RepulsedState : ITargetState
         else if (target.allWaypoints != null)
         {
             //If the target has waypoints assigned, it should continue as normal.
-            Debug.Log("I am returning to Patrol");
             Patrol();
         }
     }

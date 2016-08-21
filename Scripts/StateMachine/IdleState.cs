@@ -30,6 +30,7 @@ public class IdleState : ITargetState
         }
         if (other.gameObject.CompareTag("Lure") && target.attractable == true)
         {
+            target.lure = other.gameObject;
             Attracted();
         }
         if (other.gameObject == target.leader)
@@ -61,6 +62,7 @@ public class IdleState : ITargetState
 
     public void Attracted()
     {
+
         target.currentState = target.attractedState;
     }
 

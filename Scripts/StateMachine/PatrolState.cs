@@ -4,7 +4,6 @@ public class PatrolState : ITargetState {
 
     private readonly StatePatternTarget target;
     private int i = 0;
-    private bool doOnce;
 
     public PatrolState (StatePatternTarget statePatternTarget)
     {
@@ -13,8 +12,8 @@ public class PatrolState : ITargetState {
 
     public void UpdateState()
     {
-        Debug.Log("I am in Patrol State");
         target.navMeshAgent.speed = target.patrolSpeed;
+        target.navMeshAgent.stoppingDistance = target.patrolStoppingDist;
         GoToNextWaypoint();
     }
     
@@ -32,6 +31,7 @@ public class PatrolState : ITargetState {
         }
         if (other.gameObject.CompareTag("Lure") && target.attractable == true)
         {
+            target.lure = other.gameObject;
             Attracted();
         }
     }
@@ -92,7 +92,6 @@ public class PatrolState : ITargetState {
         else
         {
             target.navMeshAgent.destination = target.allWaypoints[i].transform.position;
-
             if (Vector3.Distance(target.navMeshAgent.transform.position, target.allWaypoints[i].transform.position) < 1f)
             {
                 i++;
