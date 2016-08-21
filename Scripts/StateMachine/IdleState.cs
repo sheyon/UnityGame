@@ -13,7 +13,20 @@ public class IdleState : ITargetState
 
     public void UpdateState()
     {
-        Wander();
+        if (target.isPassive == true)
+        {
+            if (Vector3.Distance(target.transform.position, target.player.transform.position) < 5f)
+            {
+                //Look at player
+                Quaternion idleRotation = Quaternion.LookRotation(target.player.transform.position - target.transform.position);
+                target.transform.rotation = Quaternion.Slerp(target.transform.rotation, idleRotation, target.idleSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            Wander();
+        }
+
     }
 
     public void OnTriggerEnter(Collider other)
@@ -88,5 +101,10 @@ public class IdleState : ITargetState
         {
             wanderPointReady = false;
         }
+    }
+
+    void Passive()
+    {
+        target.navMeshAgent.SetDestination(target.currentLocation);
     }
 }

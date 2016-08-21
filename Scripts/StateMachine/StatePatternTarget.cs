@@ -22,10 +22,11 @@ public class StatePatternTarget : MonoBehaviour
     public float beginFollowingDist = 10f;
 
     //Idle parameters
-    public float idleRange = 2f;
+    public float idleRange = 5f;
+    public bool isPassive;
 
     //Patrol parameters
-    public bool startPatrolling;
+    public bool patrolOnStart;
     public bool loopWaypoints;
     public GameObject[] allWaypoints;
     public GameObject despawnPoint;
@@ -76,11 +77,11 @@ public class StatePatternTarget : MonoBehaviour
         {
             currentState = followLeaderState;
         }
-        else if (startPatrolling == true)
+        else if (patrolOnStart == true)
         {
             currentState = patrolState;
         }
-        else if (startPatrolling == false)
+        else if (patrolOnStart == false)
         {
             currentState = idleState;
         }
