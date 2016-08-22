@@ -2,6 +2,7 @@
 
 public class LureBehaviors : MonoBehaviour {
 
+    private GameObject player;
     public GameObject thing;
     public Rigidbody rb;
     public ThrowLure throwLure;

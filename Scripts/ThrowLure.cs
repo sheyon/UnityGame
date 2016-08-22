@@ -15,6 +15,12 @@ public class ThrowLure : MonoBehaviour {
     private float cooldownTime = 0f;
 
 
+    void Start()
+    {
+        //player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+
     public Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)
     {
         // calculate vectors
