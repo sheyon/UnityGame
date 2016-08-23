@@ -3,57 +3,78 @@
 public class RailMover : MonoBehaviour {
 
     public GameObject mover;
-    public GameObject[] waypoint;
+    public float speed = 2.5f;
+    public Transform[] waypoint;
+    public bool loopWaypoints;
+    public bool continueWithoutPlayer;
 
-    //private Rigidbody rb;
-    //private Transform destination;
-    //private Vector3 direction;
+    public GameObject[] rideSwitch;
+    //private int j = 0;
+
+    private GameObject player;
+    private bool playerIsRiding;
+
+    private bool readyToStart;
+    private bool rideIsFinished = false;
     private int i = 0;
 
     void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
-        //rb = GetComponentInParent<Rigidbody>();
-        //GetDirection();
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (rideSwitch.Length == 0)
+        {
+            readyToStart = true;
+        }
     }
 
     void OnTriggerStay(Collider other)
     {
         other.transform.SetParent(mover.transform);
+        if (other.gameObject == player.gameObject)
+        {
+            playerIsRiding = true;
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
         other.transform.SetParent(null);
+        if (other.gameObject == player.gameObject)
+        {
+            playerIsRiding = false;
+        }
+    }
+
+    void Travelling()
+    {
+        if (rideIsFinished == false)
+        {
+            if (loopWaypoints == true && i >= waypoint.Length) { i = 0; }
+            mover.transform.position = Vector3.MoveTowards(mover.transform.position, waypoint[i].transform.position, Time.deltaTime * speed);
+
+            if (Vector3.Distance(mover.transform.position, waypoint[i].transform.position) < .1f)
+            {
+                i++;
+                if (loopWaypoints == false && i >= waypoint.Length)
+                {
+                    rideIsFinished = true;
+                }
+            }
+        }
     }
 
     void FixedUpdate()
     {
-        //rb.MovePosition(transform.position + direction * Time.deltaTime);
-
-        mover.transform.position = Vector3.Lerp(mover.transform.position, waypoint[i].transform.position, Time.deltaTime * 0.5f);
-
-        if (Vector3.Distance(mover.transform.position, waypoint[i].transform.position) < .5f)
+        if (readyToStart == true)
         {
-            i++;
-
-            if (i >= waypoint.Length)
+            if (playerIsRiding == true || continueWithoutPlayer == true)
             {
-                i = 0;
+                Travelling();
             }
-
-            //GetDirection();
+        }
+        if (loopWaypoints == true)
+        {
+            rideIsFinished = false;
         }
     }
-
-    /* This section was for moving the platform via Rigidbody.MovePosition.
-     * However, since the Platform is a Non-Kinematic Rigidbody,
-     * it is supposed to be moved by its tranform, not physics forces.
-
-    void GetDirection()
-    {
-        destination = waypoint[i].transform;
-        direction = (destination.position - mover.transform.position).normalized;
-    }
-     */
 }
