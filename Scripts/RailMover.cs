@@ -87,9 +87,12 @@ public class RailMover : MonoBehaviour {
                 Travelling();
             }
         }
-        if (loopWaypoints == true)
+        if (loopWaypoints == true && rideIsFinished == true)
         {
             rideIsFinished = false;
+        }
+        if (loopWaypoints == true && lockMovement == true)
+        {
             lockMovement = false;
         }
     }
