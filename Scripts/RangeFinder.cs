@@ -5,7 +5,8 @@ public class RangeFinder : MonoBehaviour
 {
     public bool DEBUG = true;
 
-    public GameObject crosshair;
+    [HideInInspector] public PlayerComponents playerComponents;
+
     private Camera mainCamera;
     public float maxDistance = 10f;
     private float targetDistance;
@@ -39,6 +40,7 @@ public class RangeFinder : MonoBehaviour
 
     void Awake()
     {
+        playerComponents = GetComponent<PlayerComponents>();
         storePictureInfo = GetComponent<StorePictureInfo>();
         pictureInfo = new List<StorePictureInfo.PictureInfo>();
         //preview = GetComponent<Renderer>();
@@ -62,9 +64,9 @@ public class RangeFinder : MonoBehaviour
 
         for (int i = 0; i < allTargets.Length; i++)
         {
-            visibilityVector = allTargets[i].transform.position - crosshair.transform.position;
-            Physics.Raycast(crosshair.transform.position, visibilityVector, out visibilityRay, Mathf.Infinity);
-            if (DEBUG) { Debug.DrawRay(crosshair.transform.position, visibilityVector, Color.red, Mathf.Infinity); }
+            visibilityVector = allTargets[i].transform.position - playerComponents.crosshair.transform.position;
+            Physics.Raycast(playerComponents.crosshair.transform.position, visibilityVector, out visibilityRay, Mathf.Infinity);
+            if (DEBUG) { Debug.DrawRay(playerComponents.crosshair.transform.position, visibilityVector, Color.red, Mathf.Infinity); }
 
             Vector3 viewPos = mainCamera.WorldToViewportPoint(allTargets[i].transform.position);
             if (viewPos.x <= 0 || viewPos.x >= 1 || viewPos.y <= 0 || viewPos.y >= 1 || viewPos.z <= 0)
@@ -98,7 +100,7 @@ public class RangeFinder : MonoBehaviour
     void GetTarget()
     {
         target = null;
-        if (Physics.Raycast(crosshair.transform.position, crosshair.transform.forward, out hit, maxDistance))
+        if (Physics.Raycast(playerComponents.crosshair.transform.position, playerComponents.crosshair.transform.forward, out hit, maxDistance))
         {
             target = hit.collider;
 
@@ -133,7 +135,7 @@ public class RangeFinder : MonoBehaviour
         }
         else
         {
-            facingProduct = Vector3.Dot(crosshair.transform.forward, target.transform.forward);
+            facingProduct = Vector3.Dot(playerComponents.crosshair.transform.forward, target.transform.forward);
 
             if (facingProduct >= -1 && facingProduct <= facingTolerance)
             {

@@ -3,23 +3,20 @@
 
 public class ThrowLure : MonoBehaviour {
 
-    public GameObject throwPoint;
-    public GameObject crosshair;
-    public GameObject lure;
+    [HideInInspector] public PlayerComponents playerComponents;
     public LureBehaviors lureBehaviors;
+    public GameObject lure;
     [HideInInspector] public Vector3 adjustedHit;
 
     public float maxDistance = 10f;
     private RaycastHit hit;
-    //private float distance;
     private float cooldownTime = 0f;
+    //private float distance;
 
-
-    void Start()
+    void Awake()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
+        playerComponents = GetComponent<PlayerComponents>();
     }
-
 
     public Vector3 calculateBestThrowSpeed(Vector3 origin, Vector3 target, float timeToTarget)
     {
@@ -66,7 +63,7 @@ public class ThrowLure : MonoBehaviour {
 
             else if (cooldownTime <= 0)
             {
-                Physics.Raycast(crosshair.transform.position, crosshair.transform.forward, out hit, maxDistance);
+                Physics.Raycast(playerComponents.crosshair.transform.position, playerComponents.crosshair.transform.forward, out hit, maxDistance);
 
                 if (hit.collider == null)
                 {
@@ -80,7 +77,7 @@ public class ThrowLure : MonoBehaviour {
                     if (hit.distance <= maxDistance)
                     {
                         adjustedHit = new Vector3(hit.point.x, (hit.point.y + 0.5f), hit.point.z);
-                        Instantiate(lure, throwPoint.transform.position, rotation);
+                        Instantiate(lure, playerComponents.throwPoint.transform.position, rotation);
                         cooldownTime = 3f;
                     }
                     else

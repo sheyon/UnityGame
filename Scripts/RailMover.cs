@@ -8,8 +8,8 @@ public class RailMover : MonoBehaviour {
     public bool loopWaypoints;
     public bool continueWithoutPlayer;
 
-    public GameObject[] rideSwitch;
-    //private int j = 0;
+    public bool lockMovement;
+    public ControlledBySwitch controlledBySwitch;
 
     private GameObject player;
     private bool playerIsRiding;
@@ -21,7 +21,7 @@ public class RailMover : MonoBehaviour {
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        if (rideSwitch.Length == 0)
+        if (controlledBySwitch == null)
         {
             readyToStart = true;
         }

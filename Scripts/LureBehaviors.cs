@@ -2,10 +2,11 @@
 
 public class LureBehaviors : MonoBehaviour {
 
-    private GameObject player;
-    public GameObject thing;
+    [HideInInspector] public PlayerComponents playerComponents;
+    [HideInInspector] public ThrowLure throwLure;
+
     public Rigidbody rb;
-    public ThrowLure throwLure;
+    public GameObject thing;
 
     private bool lureActive;
 
@@ -13,9 +14,10 @@ public class LureBehaviors : MonoBehaviour {
 
     void Start()
     {
+        playerComponents = FindObjectOfType(typeof(PlayerComponents)) as PlayerComponents;
+        throwLure = FindObjectOfType(typeof(ThrowLure)) as ThrowLure;
         lureActive = true;
         rb = GetComponent<Rigidbody>();
-        throwLure = FindObjectOfType(typeof(ThrowLure)) as ThrowLure;
     }
 
     void Update()
@@ -23,7 +25,7 @@ public class LureBehaviors : MonoBehaviour {
         if (lureActive == true)
         {
             //With these numbers, and Mass = 1 and Drag = 2, the lure will land almost EXACTLY where the cursor points. :D
-            rb.AddForce((throwLure.calculateBestThrowSpeed(throwLure.throwPoint.transform.position, throwLure.adjustedHit, 1f) * 100f), ForceMode.Force);
+            rb.AddForce((throwLure.calculateBestThrowSpeed(playerComponents.throwPoint.transform.position, throwLure.adjustedHit, 1f) * 100f), ForceMode.Force);
             lureActive = false;
         }
 
