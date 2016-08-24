@@ -109,7 +109,6 @@ MonoBehaviour:
   thing: {fileID: 1000011101843590}
   rb: {fileID: 54000011827863374}
   throwLure: {fileID: 0}
-  lureActive: 0
   despawnTime: 5
 --- !u!135 &135000013594804666
 SphereCollider:
