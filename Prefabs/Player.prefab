@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010611353654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -177,7 +177,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010227080926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.79999995, z: 0.5}
+  m_LocalPosition: {x: 0, y: -0.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -422,9 +422,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerComponents: {fileID: 0}
-  lure: {fileID: 1000011101843590, guid: 4204d147dee8b274a8870d383e910a2a, type: 2}
   lureBehaviors: {fileID: 114000013954076890, guid: 4204d147dee8b274a8870d383e910a2a,
     type: 2}
+  lure: {fileID: 1000011101843590, guid: 4204d147dee8b274a8870d383e910a2a, type: 2}
   adjustedHit: {x: 0, y: 0, z: 0}
   maxDistance: 15
 --- !u!114 &114000014229182348
@@ -441,6 +441,7 @@ MonoBehaviour:
   m_IsWalking: 0
   m_WalkSpeed: 5
   m_RunSpeed: 10
+  crouchSpeed: 2
   m_RunstepLenghten: 0.7
   m_JumpSpeed: 10
   m_StickToGroundForce: 10
@@ -513,6 +514,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     VerticaltoHorizontalRatio: 2
+    firstPersonController: {fileID: 114000014229182348}
   m_JumpBob:
     BobDuration: 0.2
     BobAmount: 0.1
@@ -522,8 +524,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+  m_OriginalCameraPosition: {x: 0, y: 0, z: 0}
   canFreeMove: 1
   canFreeLook: 1
+  isCrouching: 0
 --- !u!143 &143000010130151456
 CharacterController:
   m_ObjectHideFlags: 1
@@ -534,7 +538,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
+  m_Height: 1.8
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3

@@ -106,9 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07904fa0b9466fb4e8d46467f704e04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thing: {fileID: 1000011101843590}
-  rb: {fileID: 54000011827863374}
+  playerComponents: {fileID: 0}
   throwLure: {fileID: 0}
+  rb: {fileID: 54000011827863374}
+  self: {fileID: 1000011101843590}
   despawnTime: 5
 --- !u!135 &135000013594804666
 SphereCollider:
