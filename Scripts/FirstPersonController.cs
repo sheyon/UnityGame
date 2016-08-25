@@ -109,7 +109,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             else
             {
                 m_WalkSpeed = 5f;
-                m_CharacterController.height = 2f;
+                m_CharacterController.height = 1.8f;
             }
         }
 
@@ -234,12 +234,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             if (isCrouching == true)
             {
-                float velocityY = 1f;
-                float smoothTime = 1f;
+                //float velocityY = 1f;
+                //float smoothTime = 1f;
 
                 newCameraPosition = m_Camera.transform.localPosition;
-                newCameraPosition.y = Mathf.SmoothDamp(m_OriginalCameraPosition.y, (m_OriginalCameraPosition.y * 0.5f), ref velocityY, smoothTime, Time.deltaTime);
-                //newCameraPosition.y = (m_OriginalCameraPosition.y * 0.5f) - m_JumpBob.Offset();
+                newCameraPosition.y = (m_OriginalCameraPosition.y * 0.5f) - m_JumpBob.Offset();
+                //newCameraPosition.y = Mathf.SmoothDamp(m_OriginalCameraPosition.y, (m_OriginalCameraPosition.y * 0.5f), ref velocityY, smoothTime, Time.deltaTime);
+
             }
             else
             {
